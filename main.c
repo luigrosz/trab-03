@@ -4,8 +4,35 @@
 struct musica {
   int id;
   char artist_name[100];
-  char name;
-  int value;
+  char track_name[];
+  release_date;
+  genre;
+  lyrics;
+  len;
+  dating;
+  violence;
+  world / life;
+  night / time;
+  "shake the audience";
+  family / gospel;
+  romantic;
+  communication;
+  obscene;
+  music;
+  movement / places;
+  light / visual perceptions;
+  family / spiritual;
+  like / girls;
+  sadness;
+  feelings;
+  danceability;
+  loudness;
+  acousticness;
+  instrumentalness;
+  valence;
+  energy;
+  topic;
+  age;
 };
 
 int main() {
