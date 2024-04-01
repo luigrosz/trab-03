@@ -1,0 +1,8 @@
+# ignoring extensionless files
+*
+!/**/
+!*.*
+
+*.o
+*.exe
+*/.vscode
