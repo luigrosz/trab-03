@@ -1,61 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
-#include "./libraries/pilha.c"
-
-struct musica_struct {
-    char id[6];
-    char artist_name[50];
-    char track_name[200];
-    char release_date[5];
-    char genre[10];
-    char lyrics[1750];
-    char len[4];
-    char dating[25];
-    char violence[25];
-    char world[25];     // changed
-    char night[25];     // changed
-    char shake[25];     // changed
-    char gospel[25];    // changed
-    char romantic[25];  // changed
-    char communication[25];
-    char obscene[25];
-    char music[25];
-    char movement[25];   // changed
-    char light[25];      // changed
-    char spiritual[25];  // changed
-    char girls[25];      // changed
-    char sadness[25];
-    char feelings[25];
-    char danceability[25];
-    char loudness[25];
-    char acousticness[25];
-    char instrumentalness[25];
-    char valence[25];
-    char energy[25];
-    char topic[15];
-    char age[25];
-};
+#include "./libraries/estruturas.c"
 
 int main() {
     char linha_atual[10000];
     char *token;
     char *ptr;
     int base = 10;
+    clock_t t;
 
-    node *pilha;
-    pilha = NULL;
+    node *lista;
+    lista = NULL;
 
-    FILE *arquivo = fopen("tcc_ceds_music.csv", "r");
-    // FILE *arquivo = fopen("musicas_teste.csv", "r");
+    t = clock();
+    FILE *arquivo = fopen("tcc_ceds_music.csv.csv", "r");
     if (arquivo == NULL) {
         printf("erro lendo arquivo");
         return 1;
     }
 
     fgets(linha_atual, sizeof(linha_atual), arquivo);  // pula primeira linha
-    int counter = 0;
     while (fgets(linha_atual, sizeof(linha_atual), arquivo)) {
         long id, release_date, len;
         char artist_name[50];
@@ -160,15 +127,35 @@ int main() {
         token = strtok(NULL, ",");
         age = strtod(token, &ptr);
 
-        empilha(&pilha, id, artist_name, track_name, release_date, genre,
-                lyrics, len, dating, violence, world, night, shake, gospel,
-                romantic, communication, obscene, music, movement, light,
-                spiritual, girls, sadness, feelings, danceability, loudness,
-                acousticness, instrumentalness, valence, energy, topic, age);
-
-        counter++;
+        insere_lista(&lista, id, artist_name, track_name, release_date, genre,
+                     lyrics, len, dating, violence, world, night, shake, gospel,
+                     romantic, communication, obscene, music, movement, light,
+                     spiritual, girls, sadness, feelings, danceability,
+                     loudness, acousticness, instrumentalness, valence, energy,
+                     topic, age);
     }
     fclose(arquivo);
-    printf("\ncounter: %d\n", counter);
+    t = clock() - t;
+    printf("tempo para carregar em memoria: %lf segundos\n",
+           ((double)t) / CLOCKS_PER_SEC);
+
+    node *novaLista;
+    novaLista = NULL;
+    t = clock();
+    copiaParaLista(lista, &novaLista);
+    t = clock() - t;
+    printf("tempo para separar danceability na lista: %lf segundos\n",
+           ((double)t) / CLOCKS_PER_SEC);
+
+    tabHash tabela;
+    InicializaTabHash(&tabela);
+    t = clock();
+    copiaParaTabela(&tabela, lista);
+    t = clock() - t;
+    printf("tempo para separar danceability na tabela hash: %lf segundos\n",
+           ((double)t) / CLOCKS_PER_SEC);
+
+    // imprime_lista(lista);
+
     return 0;
 }
