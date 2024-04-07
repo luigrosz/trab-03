@@ -139,6 +139,7 @@ int main() {
     printf("tempo para carregar em memoria: %lf segundos\n",
            ((double)t) / CLOCKS_PER_SEC);
 
+    // LISTA
     node *novaLista;
     novaLista = NULL;
     t = clock();
@@ -146,7 +147,13 @@ int main() {
     t = clock() - t;
     printf("tempo para separar danceability na lista: %lf segundos\n",
            ((double)t) / CLOCKS_PER_SEC);
+    t = clock();
+    contarGeneroLista(novaLista);
+    t = clock() - t;
+    printf("tempo para contar as que sao pop na lista: %lf segundos\n",
+           ((double)t) / CLOCKS_PER_SEC);
 
+    // TABELA HASH
     tabHash tabela;
     InicializaTabHash(&tabela);
     t = clock();
@@ -154,8 +161,14 @@ int main() {
     t = clock() - t;
     printf("tempo para separar danceability na tabela hash: %lf segundos\n",
            ((double)t) / CLOCKS_PER_SEC);
+    t = clock();
+    // consulte o indice do genero que voce quiser no arquivo hashing.txt
+    contarGeneroTabela(tabela, 13);
+    t = clock() - t;
+    printf("tempo para contar as que sao pop na tabela hash: %lf segundos\n",
+           ((double)t) / CLOCKS_PER_SEC);
 
-    // imprime_lista(lista);
+    // imprime_lista(novaLista);
     // imprimeTabHash(tabela);
 
     return 0;

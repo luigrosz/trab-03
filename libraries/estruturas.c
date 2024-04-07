@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-
 struct struct_musica {
     long id;
     char artist_name[50];
@@ -35,6 +32,7 @@ struct struct_musica {
     double age;
 };
 
+///// LISTA DINAMICA
 struct struct_lista_enc {
     struct struct_musica musica;
     struct struct_lista_enc *prox;
@@ -85,13 +83,8 @@ void insere_lista(node **lista, long id, char *artist_name, char *track_name,
     novo->musica.topic = topic;
     novo->musica.age = age;
 
-    if ((*lista) == NULL) {
-        novo->prox = NULL;
-        (*lista) = novo;
-    } else {
-        novo->prox = (*lista);
-        (*lista) = novo;
-    }
+    novo->prox = (*lista);
+    (*lista) = novo;
 }
 
 void imprime_lista(node *lista) {
@@ -106,18 +99,24 @@ void copiaParaLista(node *lista, node **novaLista) {
         if (i->musica.danceability >= 0.5) {
             counter++;
             node *novo = (node *)malloc(sizeof(node));
-            if ((*novaLista) == NULL) {
-                novo->prox = NULL;
-                (*novaLista) = novo;
-            } else {
-                novo->prox = (*novaLista);
-                (*novaLista) = novo;
-            }
+            novo->musica = i->musica;
+            novo->prox = (*novaLista);
+            (*novaLista) = novo;
         }
     }
-    printf("COUNTER HOW MANY NODES NEW LIST: %d\n", counter);
 }
 
+void contarGeneroLista(node *lista) {
+    int counter = 0;
+    for (node *i = lista; i != NULL; i = i->prox) {
+        if (i->musica.genre[0] + i->musica.genre[1] == 223) {
+            counter++;
+        }
+    }
+    printf("counter lista enc: %d\n", counter);
+}
+
+///// TABELA HASH
 #define TAM 21
 
 struct Noh {
@@ -191,12 +190,11 @@ void copiaParaTabela(tabHash *tab, node *lista) {
 }
 
 void imprimeTabHash(tabHash Tab) {
-    int i;
     dado *aux;
 
     printf("Tabela HASH:\nCapacidade da tabela = %d\n\n", Tab.capacidade);
 
-    for (i = 0; i < Tab.capacidade; i++) {
+    for (int i = 0; i < Tab.capacidade; i++) {
         aux = Tab.tabela[i];
         printf("indice(%d): ", i);
 
@@ -207,4 +205,14 @@ void imprimeTabHash(tabHash Tab) {
 
         printf("\n\n");
     }
+}
+
+void contarGeneroTabela(tabHash tab, int indice) {
+    dado *aux = tab.tabela[indice];
+    int counter = 0;
+    while (aux != NULL) {
+        counter++;
+        aux = aux->prox;
+    }
+    printf("counter tabela Hash: %d\n", counter);
 }

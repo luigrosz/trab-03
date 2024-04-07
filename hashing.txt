@@ -1,0 +1,8 @@
+1char   2char   soma	modulo		genero
+104 	105	209	20  		hip -hop
+114 	111	225	15		rock
+114 	101	215	5		reggae
+106 	97	203	14		jazz
+98 	108	206	17		blues
+99 	111	210	0		country
+112 	111	223	13		pop
