@@ -96,7 +96,7 @@ void insere_lista(node **lista, long id, char *artist_name, char *track_name,
 
 void imprime_lista(node *lista) {
     for (node *i = lista; i != NULL; i = i->prox) {
-        printf("%s\n", i->musica.genre);
+        printf("%s\n", i->musica.track_name);
     }
 }
 
@@ -183,6 +183,28 @@ void copiaParaTabela(tabHash *tab, node *lista) {
             novo->musica.energy = i->musica.energy;
             novo->musica.topic = i->musica.topic;
             novo->musica.age = i->musica.age;
+
+            novo->prox = tab->tabela[indice];
+            tab->tabela[indice] = novo;
         }
+    }
+}
+
+void imprimeTabHash(tabHash Tab) {
+    int i;
+    dado *aux;
+
+    printf("Tabela HASH:\nCapacidade da tabela = %d\n\n", Tab.capacidade);
+
+    for (i = 0; i < Tab.capacidade; i++) {
+        aux = Tab.tabela[i];
+        printf("indice(%d): ", i);
+
+        while (aux != NULL) {
+            printf("[%s] ", aux->musica.track_name);
+            aux = aux->prox;
+        }
+
+        printf("\n\n");
     }
 }

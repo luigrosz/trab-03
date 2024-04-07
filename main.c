@@ -16,7 +16,7 @@ int main() {
     lista = NULL;
 
     t = clock();
-    FILE *arquivo = fopen("tcc_ceds_music.csv.csv", "r");
+    FILE *arquivo = fopen("tcc_ceds_music.csv", "r");
     if (arquivo == NULL) {
         printf("erro lendo arquivo");
         return 1;
@@ -156,6 +156,7 @@ int main() {
            ((double)t) / CLOCKS_PER_SEC);
 
     // imprime_lista(lista);
+    // imprimeTabHash(tabela);
 
     return 0;
 }
